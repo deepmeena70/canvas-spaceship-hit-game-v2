@@ -129,16 +129,29 @@ class Laser {
         this.radius = 10;
         this.spaceShipShadowBlur = 7;
         this.color = ['#00FF66', '#00FF00', '#8A2BE2', '#FF6600', '#8A2BE2', '#FFFF00'];
+        this.power = 0;
     }
     update(x, y) {
         if (this.x > innerWidth) {
 
             this.x = x + 40;
             this.y = y;
+            this.radius = 10;
 
         }
-        this.x += 40;
+        this.x += 20;
 
+    }
+
+    powerUpdate(x, y) {
+        if (this.x > innerWidth && this.power == 100) {
+            this.x = x;
+            this.y = y;
+            this.radius = 0;
+
+        }
+        this.x += 8;
+        this.radius += 2;
     }
 
     draw() {
@@ -188,6 +201,7 @@ class Obstacle {
 
 let spaceCraft = new SpaceCraft();
 let laser = new Laser(spaceCraft.x, spaceCraft.y);
+let laserPower = new Laser(spaceCraft.x, spaceCraft.y);
 let numberOfParticles = 20;
 let obstaclesArray = [];
 
@@ -200,18 +214,68 @@ function init() {
 
 init();
 
+
 function animate() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     spaceCraft.draw();
     spaceCraft.update();
     laser.draw();
     laser.update(spaceCraft.x, spaceCraft.y);
+
+    laserPower.draw();
+    laserPower.powerUpdate(spaceCraft.x, spaceCraft.y, power);
     for (let i = 0; i < obstaclesArray.length; i++) {
         obstaclesArray[i].draw();
         obstaclesArray[i].update();
     }
 
+    collision();
+
     raf = requestAnimationFrame(animate);
+}
+
+let points = 0;
+let power = 0;
+
+function collision() {
+
+    for (let i = 0; i < obstaclesArray.length; i++) {
+        let dx1 = laser.x - obstaclesArray[i].x;
+        let dy1 = laser.y - obstaclesArray[i].y;
+        let dx2 = laserPower.x - obstaclesArray[i].x;
+        let dy2 = laserPower.y - obstaclesArray[i].y;
+        let distance1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);
+        let distance2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+        if (distance1 < laser.radius + obstaclesArray[i].radius || distance2 < laserPower.radius + obstaclesArray[i].radius) {
+            if (obstaclesArray[i].radius >= 20) {
+                points += Math.floor(obstaclesArray[i].radius);
+                document.getElementById("points").innerHTML = points;
+                obstaclesArray[i].radius = 0;
+                laser.x = null;
+            }
+            if (obstaclesArray[i].radius >= 8) {
+
+                if (power <= 100) {
+                    power += Math.floor(obstaclesArray[i].radius * 2);
+                    if (power > 100) {
+                        power = 100;
+                    }
+
+                    document.getElementById("power").innerHTML = Math.round(power) + " %";
+                    document.getElementById("power").style.boxShadow = "inset 0 0 " + power + "px #FFFF00";
+                    obstaclesArray[i].radius = 0;
+                }
+                if (power == 100) {
+                    power = 0;
+                    laser.power = 100;
+                }
+
+
+            }
+
+
+        }
+    }
 }
 
 window.addEventListener('keydown', (e) => {
@@ -238,11 +302,20 @@ window.addEventListener('keydown', (e) => {
             }
         case "q":
             {
+                if (laser.power == 100) {
 
+                    laserPower.x = spaceCraft.x + 140;
+                    laserPower.y = spaceCraft.y;
+                    laserPower.radius = 0;
+                    console.log(laserPower.power);
+                }
+                laser.power = 0;
             }
     }
 
 });
+
+
 
 
 const playBtn = document.getElementById("play");

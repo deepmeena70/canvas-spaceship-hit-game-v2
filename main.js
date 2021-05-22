@@ -260,11 +260,11 @@ function collision() {
                 points += Math.floor(obstaclesArray[i].radius);
                 document.getElementById("points").innerHTML = points;
                 obstaclesArray[i].radius = 0;
-<<<<<<< Updated upstream
+
                 laser.x = null;
             }
             if (obstaclesArray[i].radius >= 8) {
-=======
+
                 laser.x = spaceCraft.x;
             }
         }
@@ -279,67 +279,33 @@ function collision() {
 
             if (distance3 < spaceCraft.size + obstaclesArray[i].radius) {
                 if (obstaclesArray[i].radius >= 8 && obstaclesArray[i].radius < 20) {
->>>>>>> Stashed changes
 
-                if (power <= 100) {
-                    power += Math.floor(obstaclesArray[i].radius * 2);
-                    if (power > 100) {
-                        power = 100;
+
+                    if (power <= 100) {
+                        power += Math.floor(obstaclesArray[i].radius * 2);
+                        if (power > 100) {
+                            power = 100;
+                        }
+
+                        document.getElementById("power").innerHTML = Math.round(power) + " %";
+                        document.getElementById("power").style.boxShadow = "inset 0 0 " + power + "px #FFFF00";
+                        obstaclesArray[i].radius = 0;
+                    }
+                    if (power == 100) {
+                        power = 0;
+                        laser.power = 100;
                     }
 
-                    document.getElementById("power").innerHTML = Math.round(power) + " %";
-                    document.getElementById("power").style.boxShadow = "inset 0 0 " + power + "px #FFFF00";
-                    obstaclesArray[i].radius = 0;
-                }
-                if (power == 100) {
-                    power = 0;
-                    laser.power = 100;
+
                 }
 
 
             }
-
-
         }
     }
 }
 
 window.addEventListener('keydown', (e) => {
-<<<<<<< Updated upstream
-    switch (e.key) {
-        case "d":
-            {
-                spaceCraft.left();
-                break;
-            }
-        case "a":
-            {
-                spaceCraft.right();
-                break;
-            }
-        case "w":
-            {
-                spaceCraft.up();
-                break;
-            }
-        case "s":
-            {
-                spaceCraft.down();
-                break;
-            }
-        case "q":
-            {
-                if (laser.power == 100) {
-
-                    laserPower.x = spaceCraft.x + 140;
-                    laserPower.y = spaceCraft.y;
-                    laserPower.radius = 0;
-                    console.log(laserPower.power);
-                }
-                laser.power = 0;
-            }
-    }
-=======
     if (spaceCraft != null)
         switch (e.key) {
             case "d":
@@ -364,7 +330,6 @@ window.addEventListener('keydown', (e) => {
                 }
 
         }
->>>>>>> Stashed changes
 
 });
 

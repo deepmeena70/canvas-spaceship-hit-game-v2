@@ -187,6 +187,7 @@ class Obstacle {
         this.speed = 4;
         this.radius = 0;
         this.color = ['#FF00FF', '#FFFF00', '#FF3300', '#A5D8F3'];
+        this.shadowBlur = 0;
 
     }
     update() {
@@ -194,14 +195,17 @@ class Obstacle {
         if (this.x < 0) {
             this.x = innerWidth;
             this.radius = 40 * Math.random() + 5;
+
         }
         if (this.x == innerWidth) {
             this.y = Math.random() * canvas.height;
+            this.shadowBlur = Math.random() * 5 + this.radius / 2;
         }
         if (this.y <= 400)
             this.y += Math.random() * 0.5;
         if (this.y >= 1200)
             this.y -= Math.random() * 0.5;
+
 
     }
     draw() {
@@ -219,7 +223,7 @@ class Obstacle {
             ctx.fillStyle = this.color[0];
         }
         ctx.fill();
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur = this.shadowBlur;
         ctx.shadowColor = "#FF6600";
         ctx.closePath();
     }

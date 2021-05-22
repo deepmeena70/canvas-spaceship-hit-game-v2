@@ -9,6 +9,7 @@ class SpaceCraft {
     constructor() {
         this.x = 180;
         this.y = 75;
+        this.size = 12;
         this.radius = 2;
         this.strokeSize1 = 2;
         this.strokeSize2 = 8;
@@ -18,6 +19,8 @@ class SpaceCraft {
         this.flameShadowAlpha = 5;
         this.flameShadowBlur = 25;
         this.thrust = 0;
+        this.spaceCraftCenter = (this.x - this.x / 2) + (this.y - this.y / 2);
+
     }
     update() {
         this.flameShadowBlur = 40 * Math.random() + 25;
@@ -231,6 +234,12 @@ function animate() {
 
     collision();
 
+
+    if (spaceCraft == null) {
+
+        return;
+
+    }
     raf = requestAnimationFrame(animate);
 }
 
@@ -251,9 +260,26 @@ function collision() {
                 points += Math.floor(obstaclesArray[i].radius);
                 document.getElementById("points").innerHTML = points;
                 obstaclesArray[i].radius = 0;
+<<<<<<< Updated upstream
                 laser.x = null;
             }
             if (obstaclesArray[i].radius >= 8) {
+=======
+                laser.x = spaceCraft.x;
+            }
+        }
+        if (distance3 < spaceCraft.size + obstaclesArray[i].radius) {
+            if (obstaclesArray[i].radius >= 20) {
+                spaceCraft.color.splice(0, 2, '#FF6600', '#FF6600');
+                spaceCraft = null;
+                return;
+            }
+        }
+        if (laserPower.power != 100) {
+
+            if (distance3 < spaceCraft.size + obstaclesArray[i].radius) {
+                if (obstaclesArray[i].radius >= 8 && obstaclesArray[i].radius < 20) {
+>>>>>>> Stashed changes
 
                 if (power <= 100) {
                     power += Math.floor(obstaclesArray[i].radius * 2);
@@ -279,6 +305,7 @@ function collision() {
 }
 
 window.addEventListener('keydown', (e) => {
+<<<<<<< Updated upstream
     switch (e.key) {
         case "d":
             {
@@ -312,8 +339,39 @@ window.addEventListener('keydown', (e) => {
                 laser.power = 0;
             }
     }
+=======
+    if (spaceCraft != null)
+        switch (e.key) {
+            case "d":
+                {
+                    spaceCraft.left();
+                    break;
+                }
+            case "a":
+                {
+                    spaceCraft.right();
+                    break;
+                }
+            case "w":
+                {
+                    spaceCraft.up();
+                    break;
+                }
+            case "s":
+                {
+                    spaceCraft.down();
+                    break;
+                }
+
+        }
+>>>>>>> Stashed changes
 
 });
+
+window.addEventListener('resize', () => {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+})
 
 
 

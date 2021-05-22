@@ -179,7 +179,7 @@ class Obstacle {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.speed = 4;
-        this.radius = 40 * Math.random();
+        this.radius = 0;
         this.color = ['#FF00FF', '#FFFF00', '#FF3300', '#A5D8F3'];
 
     }
@@ -253,9 +253,12 @@ function animateAfterCollision() {
     requestAnimationFrame(animateAfterCollision);
 }
 
+
+
 function animate() {
 
     ctx.clearRect(0, 0, innerWidth, innerHeight);
+
     spaceCraft.draw();
     spaceCraft.update();
     laser.draw();
@@ -263,6 +266,7 @@ function animate() {
     laserPower.draw();
     laserPower.powerUpdate(spaceCraft.x, spaceCraft.y, power);
     for (let i = 0; i < obstaclesArray.length; i++) {
+
         obstaclesArray[i].draw();
         obstaclesArray[i].update();
     }

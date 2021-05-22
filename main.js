@@ -264,13 +264,13 @@ function animateAfterCollision() {
 }
 
 
-
 function animate() {
-
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
     spaceCraft.draw();
     spaceCraft.update();
+    laserSound.play();
+    laserSound.volume = 0.1;
     laser.draw();
     laser.update(spaceCraft.x, spaceCraft.y);
     laserPower.draw();
@@ -294,10 +294,15 @@ function animate() {
 
         playBtn.remove();
 
+        backgroundMusic.pause();
+
+        destroySound.play();
+
         animateAfterCollision();
 
         return;
     }
+
     raf = requestAnimationFrame(animate);
 }
 
@@ -318,10 +323,13 @@ function collision() {
         let distance3 = Math.sqrt(dx3 * dx3 + dy3 * dy3);
         if (distance1 < laser.radius + obstaclesArray[i].radius || distance2 < laserPower.radius + obstaclesArray[i].radius) {
             if (obstaclesArray[i].radius >= 20) {
+
                 points += Math.floor(obstaclesArray[i].radius);
                 document.getElementById("points").innerHTML = points;
                 obstaclesArray[i].radius = 0;
                 laser.x = spaceCraft.x;
+                obstaclesDestroySound.play();
+
             }
         }
         if (distance3 < spaceCraft.size + obstaclesArray[i].radius) {
@@ -350,6 +358,7 @@ function collision() {
                         document.getElementById("power").style.boxShadow = "inset 0 0 " + power + "px #FFFF00";
                         obstaclesArray[i].radius = null;
                     }
+                    powerSound.play();
 
                 }
             }
@@ -360,6 +369,7 @@ function collision() {
             laserPower.power = 100;
             document.getElementById("power").innerHTML = Math.round(power) + " %";
             document.getElementById("power").style.boxShadow = "inset 0 0 " + power + 5 + "px #FFFF00";
+            laserPowerSound.play();
         }
 
 
@@ -408,15 +418,35 @@ window.addEventListener('resize', () => {
 const playBtn = document.getElementById("play");
 let playStatus = 0;
 
+let src = "Progress.mp3";
+let backgroundMusic = new Audio(src);
+
+src = "destroy.mp3";
+let destroySound = new Audio(src);
+
+src = "laser.mp3";
+let laserSound = new Audio(src);
+
+src = "laserpower.mp3";
+let laserPowerSound = new Audio(src);
+
+src = "obstacledestroy.mp3";
+let obstaclesDestroySound = new Audio(src);
+
+src = "power2.mp3";
+let powerSound = new Audio(src);
+
 playBtn.addEventListener("click", (e) => {
     if (playStatus == 0) {
         animate();
         playStatus = 1;
         playBtn.innerHTML = "Pause";
+        backgroundMusic.play();
         cancelAnimationFrame(baf);
     } else {
         playStatus = 0;
         cancelAnimationFrame(raf);
+        backgroundMusic.pause();
         playBtn.innerHTML = "Play";
     }
 

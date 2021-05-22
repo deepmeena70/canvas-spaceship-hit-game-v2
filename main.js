@@ -155,6 +155,12 @@ class Laser {
     }
 
     powerUpdate(x, y) {
+        if (this.power < 100) {
+            this.x = x;
+            this.y = y;
+            this.radius = 0;
+            return;
+        }
         if (this.x > innerWidth && this.power == 100) {
             this.x = x;
             this.y = y;
@@ -163,7 +169,7 @@ class Laser {
 
         }
         this.x += 8;
-        this.radius += 2;
+        this.radius++;
     }
 
     draw() {

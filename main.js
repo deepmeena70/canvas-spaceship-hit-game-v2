@@ -4,6 +4,7 @@ canvas.height = innerHeight;
 const ctx = canvas.getContext('2d');
 
 let raf;
+let baf;
 
 class SpaceCraft {
     constructor() {
@@ -239,7 +240,7 @@ function beforeAnimate() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     spaceCraft.draw();
     spaceCraft.update();
-    requestAnimationFrame(beforeAnimate);
+    baf = requestAnimationFrame(beforeAnimate);
 }
 
 beforeAnimate();
@@ -276,6 +277,7 @@ function animate() {
             document.location.reload();
         });
 
+        playBtn.remove();
 
         animateAfterCollision();
 
@@ -395,6 +397,7 @@ playBtn.addEventListener("click", (e) => {
         animate();
         playStatus = 1;
         playBtn.innerHTML = "Play";
+        cancelAnimationFrame(baf);
     } else {
         playStatus = 0;
         cancelAnimationFrame(raf);

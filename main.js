@@ -253,6 +253,9 @@ function collision() {
         let dy1 = laser.y - obstaclesArray[i].y;
         let dx2 = laserPower.x - obstaclesArray[i].x;
         let dy2 = laserPower.y - obstaclesArray[i].y;
+        let dx3 = spaceCraft.x - obstaclesArray[i].x;
+        let dy3 = spaceCraft.y - obstaclesArray[i].y;
+        let distance3 = Math.sqrt(dx3 * dx3 + dy3 * dy3);
         let distance1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);
         let distance2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
         if (distance1 < laser.radius + obstaclesArray[i].radius || distance2 < laserPower.radius + obstaclesArray[i].radius) {
@@ -336,7 +339,7 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('resize', () => {
     canvas.width = innerWidth;
     canvas.height = innerHeight;
-})
+});
 
 
 

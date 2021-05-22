@@ -224,7 +224,6 @@ function init() {
 
 init();
 
-
 function animate() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     spaceCraft.draw();
@@ -240,8 +239,17 @@ function animate() {
 
     collision();
 
-    if (spaceCraft != null)
-        raf = requestAnimationFrame(animate);
+    if (spaceCraft == null) {
+        let resetBtn = document.createElement("button");
+        resetBtn.id = "reload";
+        document.body.appendChild(resetBtn);
+        resetBtn.innerHTML = "Click <br> to <br> Reset!";
+        resetBtn.addEventListener("click", () => {
+            document.location.reload();
+        });
+        return;
+    }
+    raf = requestAnimationFrame(animate);
 }
 
 let points = 0;
@@ -341,6 +349,10 @@ window.addEventListener('keydown', (e) => {
 });
 
 
+window.addEventListener('resize', () => {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+});
 
 
 
@@ -354,7 +366,7 @@ playBtn.addEventListener("click", (e) => {
     } else {
         playStatus = 0;
         cancelAnimationFrame(raf);
-        playBtn.innerHTML = "Stop";
+        playBtn.innerHTML = "Pause";
     }
 
 });

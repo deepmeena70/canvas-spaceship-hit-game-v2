@@ -254,6 +254,7 @@ function animateAfterCollision() {
 }
 
 function animate() {
+
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     spaceCraft.draw();
     spaceCraft.update();
@@ -272,7 +273,7 @@ function animate() {
         let resetBtn = document.createElement("button");
         resetBtn.id = "reload";
         document.body.appendChild(resetBtn);
-        resetBtn.innerHTML = "Click <br> to <br> Reset!";
+        resetBtn.innerHTML = "Click <br> to <br> Reload!";
         resetBtn.addEventListener("click", () => {
             document.location.reload();
         });
@@ -392,16 +393,17 @@ window.addEventListener('resize', () => {
 
 const playBtn = document.getElementById("play");
 let playStatus = 0;
+
 playBtn.addEventListener("click", (e) => {
     if (playStatus == 0) {
         animate();
         playStatus = 1;
-        playBtn.innerHTML = "Play";
+        playBtn.innerHTML = "Pause";
         cancelAnimationFrame(baf);
     } else {
         playStatus = 0;
         cancelAnimationFrame(raf);
-        playBtn.innerHTML = "Pause";
+        playBtn.innerHTML = "Play";
     }
 
 });

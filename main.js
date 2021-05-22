@@ -60,6 +60,15 @@ class SpaceCraft {
             this.y += 10;
     }
 
+    destroy() {
+
+        if (burst < 20) {
+            this.flameShadowBlur += 4;
+            this.color.splice(0, 5, '#FF6600');
+        }
+
+    }
+
     draw() {
 
         ctx.beginPath();
@@ -224,6 +233,25 @@ function init() {
 
 init();
 
+let burst = 0;
+
+function beforeAnimate() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    spaceCraft.draw();
+    spaceCraft.update();
+    requestAnimationFrame(beforeAnimate);
+}
+
+beforeAnimate();
+
+function animateAfterCollision() {
+
+    spaceCraft.draw();
+    spaceCraft.destroy();
+    burst++;
+    requestAnimationFrame(animateAfterCollision);
+}
+
 function animate() {
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     spaceCraft.draw();
@@ -239,7 +267,7 @@ function animate() {
 
     collision();
 
-    if (spaceCraft == null) {
+    if (obstaclesArray.length === 0) {
         let resetBtn = document.createElement("button");
         resetBtn.id = "reload";
         document.body.appendChild(resetBtn);
@@ -247,6 +275,10 @@ function animate() {
         resetBtn.addEventListener("click", () => {
             document.location.reload();
         });
+
+
+        animateAfterCollision();
+
         return;
     }
     raf = requestAnimationFrame(animate);
@@ -277,8 +309,8 @@ function collision() {
         }
         if (distance3 < spaceCraft.size + obstaclesArray[i].radius) {
             if (obstaclesArray[i].radius >= 20) {
-                spaceCraft.color.splice(0, 2, '#FF6600', '#FF6600');
-                spaceCraft = null;
+                obstaclesArray = [];
+                laser = null;
                 return;
             }
         }
@@ -321,7 +353,7 @@ function collision() {
 let laserPowerStatus = 0;
 
 window.addEventListener('keydown', (e) => {
-    if (spaceCraft != null)
+    if (obstaclesArray !== undefined && obstaclesArray.length > 0)
         switch (e.key) {
             case "d":
                 {

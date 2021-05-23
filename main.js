@@ -379,6 +379,8 @@ function collision() {
 
 let laserPowerStatus = 0;
 
+// key controls;
+
 window.addEventListener('keydown', (e) => {
     if (obstaclesArray !== undefined && obstaclesArray.length > 0)
         switch (e.key) {
@@ -413,6 +415,88 @@ window.addEventListener('resize', () => {
     canvas.height = innerHeight;
 });
 
+// touch controls
+
+let touchStart;
+let touchmove;
+let sensitivity = 50;
+let xDown = null;
+let yDown = null;
+
+function touchControls() {
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', e => {
+        clearInterval(touchStart);
+        clearInterval(touchmove);
+    });
+
+    function getTouches(e) {
+        return e.touches;
+    }
+
+    function handleTouchStart(e) {
+        const firstTouch = getTouches(e)[0];
+        xDown = firstTouch.clientX;
+        yDown = firstTouch.clientY;
+
+        if (obstaclesArray !== undefined && obstaclesArray.length > 0)
+            touchStart = setInterval(() => {
+                if (xDown > 100)
+                    spaceCraft.left();
+                if (xDown < innerWidth - 100)
+                    spaceCraft.right();
+            }, sensitivity);
+
+    }
+
+    function handleTouchMove(e) {
+        if (!xDown || !yDown) {
+            return;
+        }
+
+        let xUp = e.touches[0].clientX;
+        let yUp = e.touches[0].clientY;
+
+        let xDiff = xDown - xUp;
+        let yDiff = yDown - yUp;
+
+        if (Math.abs(xDiff) > Math.abs(yDiff)) { /*most significant*/
+            if (xDiff > 0) {
+                /* left swipe */
+            } else {
+                /* right swipe */
+            }
+        } else {
+            if (yDiff > 0) {
+                /* up swipe */
+                if (obstaclesArray !== undefined && obstaclesArray.length > 0)
+
+                    touchmove = setInterval(() => {
+                    spaceCraft.up();
+                }, sensitivity);
+
+            } else {
+                /* down swipe */
+                if (obstaclesArray !== undefined && obstaclesArray.length > 0)
+
+                    touchmove = setInterval(() => {
+                    spaceCraft.down();
+                }, sensitivity);
+            }
+        }
+        /* reset values */
+        xDown = null;
+        yDown = null;
+    };
+}
+
+touchControls();
+
+
+
+
+
 
 
 const playBtn = document.getElementById("play");
@@ -433,7 +517,7 @@ let laserPowerSound = new Audio(src);
 src = "obstacledestroy.mp3";
 let obstaclesDestroySound = new Audio(src);
 
-src = "power2.mp3";
+src = "power.mp3";
 let powerSound = new Audio(src);
 
 playBtn.addEventListener("click", (e) => {

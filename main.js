@@ -68,6 +68,7 @@ class SpaceCraft {
             this.color.splice(0, 5, '#FF6600');
         }
 
+
     }
 
     draw() {
@@ -334,7 +335,7 @@ function collision() {
         }
         if (distance3 < spaceCraft.size + obstaclesArray[i].radius) {
             if (obstaclesArray[i].radius >= 20) {
-                obstaclesArray = [];
+                obstaclesArray.length = 0;
                 laser = null;
                 return;
             }
@@ -424,6 +425,7 @@ let xDown = null;
 let yDown = null;
 
 function touchControls() {
+
     document.addEventListener('touchstart', handleTouchStart);
     document.addEventListener('touchmove', handleTouchMove);
     document.addEventListener('touchend', e => {
@@ -440,13 +442,15 @@ function touchControls() {
         xDown = firstTouch.clientX;
         yDown = firstTouch.clientY;
 
-        if (obstaclesArray !== undefined && obstaclesArray.length > 0)
-            touchStart = setInterval(() => {
-                if (xDown > 100)
+        touchStart = setInterval(() => {
+            if (xDown > 100)
+                if (obstaclesArray.length > 0)
                     spaceCraft.left();
-                if (xDown < innerWidth - 100)
+            if (xDown < innerWidth - 100)
+                if (obstaclesArray.length > 0)
                     spaceCraft.right();
-            }, sensitivity);
+        }, sensitivity);
+
 
     }
 
@@ -468,31 +472,32 @@ function touchControls() {
                 /* right swipe */
             }
         } else {
+
             if (yDiff > 0) {
                 /* up swipe */
-                if (obstaclesArray !== undefined && obstaclesArray.length > 0)
-
-                    touchmove = setInterval(() => {
-                    spaceCraft.up();
+                touchmove = setInterval(() => {
+                    if (obstaclesArray.length > 0)
+                        spaceCraft.up();
                 }, sensitivity);
 
             } else {
                 /* down swipe */
-                if (obstaclesArray !== undefined && obstaclesArray.length > 0)
-
-                    touchmove = setInterval(() => {
-                    spaceCraft.down();
+                touchmove = setInterval(() => {
+                    if (obstaclesArray.length > 0)
+                        spaceCraft.down();
                 }, sensitivity);
+
             }
+
         }
         /* reset values */
         xDown = null;
         yDown = null;
-    };
+    }
 }
 
-touchControls();
 
+touchControls();
 
 
 

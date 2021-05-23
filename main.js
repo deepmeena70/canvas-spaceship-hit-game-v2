@@ -575,6 +575,10 @@ playBtn.addEventListener("click", (e) => {
         animate();
         playStatus = 1;
         playBtn.innerHTML = "Pause";
+        document.getElementById("info1").style.display = "none";
+        document.getElementById("info2").style.display = "none";
+
+
         backgroundMusic.play();
         cancelAnimationFrame(baf);
     } else {
@@ -582,6 +586,13 @@ playBtn.addEventListener("click", (e) => {
         cancelAnimationFrame(raf);
         backgroundMusic.pause();
         playBtn.innerHTML = "Play";
+        if (canvas.width > 1366) {
+            document.getElementById("info1").style.display = "block";
+        } else {
+            document.getElementById("info2").style.display = "block";
+        }
+
+
     }
 
 });

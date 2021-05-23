@@ -180,20 +180,28 @@ class SpaceCraft {
 }
 
 class Laser {
-    constructor(x, y) {
+    constructor(x, y, radius) {
         this.x = x;
         this.y = y;
-        this.radius = 10;
+
+        this.radius = radius;
+
         this.spaceShipShadowBlur = 7;
         this.color = ['#00FF66', '#00FF00', '#8A2BE2', '#FF6600', '#8A2BE2', '#FFFF00'];
         this.power = 0;
     }
-    update(x, y) {
+    update(x, y, radius) {
         if (this.x > innerWidth) {
 
             this.x = x;
             this.y = y;
-            this.radius = 10;
+            if (canvas.width < 1000) {
+
+                this.radius = radius / 2;
+            } else {
+                this.radius = radius;
+            }
+
 
         }
         this.x += 2 * Math.random() + 50;
@@ -240,7 +248,12 @@ class Obstacle {
         this.x -= this.speed;
         if (this.x < 0) {
             this.x = innerWidth;
-            this.radius = 40 * Math.random() + 5;
+            if (canvas.width < 1000) {
+                this.radius = 25 * Math.random() + 2;
+            } else {
+
+                this.radius = 40 * Math.random() + 5;
+            }
 
         }
         if (this.x == innerWidth) {
@@ -276,7 +289,7 @@ class Obstacle {
 }
 
 let spaceCraft = new SpaceCraft();
-let laser = new Laser(spaceCraft.x, spaceCraft.y);
+let laser = new Laser(spaceCraft.x, spaceCraft.y, 10);
 let laserPower = new Laser(spaceCraft.x, spaceCraft.y);
 let numberOfParticles = 50;
 let obstaclesArray = [];
@@ -318,7 +331,7 @@ function animate() {
     laserSound.play();
     laserSound.volume = 0.1;
     laser.draw();
-    laser.update(spaceCraft.x, spaceCraft.y);
+    laser.update(spaceCraft.x, spaceCraft.y, 10);
     laserPower.draw();
     laserPower.powerUpdate(spaceCraft.x, spaceCraft.y, power);
     for (let i = 0; i < obstaclesArray.length; i++) {
@@ -333,7 +346,12 @@ function animate() {
         let resetBtn = document.createElement("button");
         resetBtn.id = "reload";
         document.body.appendChild(resetBtn);
-        resetBtn.innerHTML = "Click <br> to <br> Reload!";
+        if (innerWidth < 1000) {
+            resetBtn.innerHTML = "Touch <br> to <br> Reload!"
+        } else {
+
+            resetBtn.innerHTML = "Click <br> to <br> Reload!";
+        }
         resetBtn.addEventListener("click", () => {
             document.location.reload();
         });

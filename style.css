@@ -240,7 +240,7 @@ body {
         bottom: 18%;
         box-shadow: inset 0 0 12px #FFFF00;
         line-height: 90px;
-        left: 30%;
+        left: 20%;
     }
     #points {
         width: 90px;
@@ -251,7 +251,7 @@ body {
         line-height: 90px;
         text-shadow: 0 0 4px #FFFF00;
         font-size: 8px;
-        right: 30%;
+        right: 20%;
     }
     #play {
         bottom: 25%;

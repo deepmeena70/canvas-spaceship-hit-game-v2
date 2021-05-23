@@ -85,12 +85,25 @@ class SpaceCraft {
         }
     }
     up() {
-        if (this.y > 100)
-            this.y -= 10;
+        if (canvas.height < 500) {
+            if (this.y > innerHeight * 0.15) {
+                this.y -= 5;
+            }
+        } else {
+
+            if (this.y > 100)
+                this.y -= 10;
+        }
     }
     down() {
-        if (this.y < innerHeight - 200)
-            this.y += 10;
+        if (canvas.height < 500) {
+            if (this.y < innerHeight * 0.85)
+                this.y += 5;
+        } else {
+
+            if (this.y < innerHeight - 200)
+                this.y += 10;
+        }
     }
 
     destroy() {

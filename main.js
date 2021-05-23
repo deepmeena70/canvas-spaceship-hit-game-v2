@@ -27,29 +27,61 @@ class SpaceCraft {
 
     }
     left() {
-        if (this.x < innerWidth - 200) {
-            this.x += 10;
-            if (this.strokeSize2 <= 50)
-                this.strokeSize2++;
+        if (canvas.width > 500) {
+            if (this.x < innerWidth - 200) {
+                this.x += 10;
+                if (this.x < 800)
+                    this.strokeSize2++;
+
+            }
+            if (this.x < 500) {
+                this.thrust--;
+            }
+
+        } else {
+            if (this.x < innerWidth - innerWidth * 0.25) {
+                this.x += 10;
+                if (this.x <= innerWidth)
+                    this.strokeSize2 += 2;
 
 
+            }
+            if (this.x < innerWidth * 0.7) {
+                this.thrust--;
+            }
         }
-        if (this.x < 400) {
-            this.thrust--;
-        }
+
+
     }
     right() {
-        if (this.x > 180) {
-            this.x -= 10;
-            if (this.strokeSize2 > 8)
-                this.strokeSize2--;
+        if (canvas.width > 500) {
+            if (this.x > 180) {
+                this.x -= 10;
+                if (this.strokeSize2 > 8)
+                    this.strokeSize2--;
 
-        }
-        if (this.x >= 1200) {
-            this.thrust++;
-        }
-        if (this.x < 500) {
-            this.thrust = 0;
+            }
+            if (this.x >= innerWidth * 0.95) {
+                this.thrust++;
+            }
+            if (this.x < innerWidth) {
+                this.thrust = 0;
+            }
+
+        } else {
+
+            if (this.x > innerWidth * 0.4) {
+                this.x -= 10;
+                if (this.strokeSize2 > 8)
+                    this.strokeSize2 -= 2;
+
+            }
+            if (this.x >= innerHeight * 0.95) {
+                this.thrust++;
+            }
+            if (this.x < 500) {
+                this.thrust = 0;
+            }
         }
     }
     up() {
@@ -443,10 +475,10 @@ function touchControls() {
         yDown = firstTouch.clientY;
 
         touchStart = setInterval(() => {
-            if (xDown > 100)
+            if (xDown > 200 && yDown > innerHeight * 0.7)
                 if (obstaclesArray.length > 0)
                     spaceCraft.left();
-            if (xDown < innerWidth - 100)
+            if (xDown < innerWidth - 200 && yDown > innerHeight * 0.7)
                 if (obstaclesArray.length > 0)
                     spaceCraft.right();
         }, sensitivity);

@@ -119,23 +119,23 @@ body {
 
 @media (max-width: 750px) {
     #power {
-        width: 100px;
-        height: 100px;
+        width: 70px;
+        height: 70px;
         text-shadow: 0 0 4px #FFFF00;
-        font-size: 18px;
+        font-size: 12px;
         bottom: 20%;
         box-shadow: inset 0 0 12px #FFFF00;
-        line-height: 100px;
+        line-height: 70px;
     }
     #points {
-        width: 100px;
-        height: 100px;
+        width: 70px;
+        height: 70px;
         bottom: 20%;
         box-shadow: inset 0 0 12px #00FF66;
         text-align: center;
-        line-height: 100px;
+        line-height: 70px;
         text-shadow: 0 0 4px #FFFF00;
-        font-size: 18px;
+        font-size: 12px;
     }
     #play {
         top: 84%;
@@ -144,6 +144,44 @@ body {
         font-size: 18px;
         letter-spacing: 12px;
         text-indent: 20px;
+    }
+    #reload {
+        width: 200px;
+        height: 200px;
+        font-size: 20px;
+        color: #FFFF00;
+    }
+}
+
+@media (max-height: 350px) {
+    #power {
+        width: 50px;
+        height: 50px;
+        text-shadow: 0 0 4px #FFFF00;
+        font-size: 8px;
+        bottom: 10%;
+        box-shadow: inset 0 0 12px #FFFF00;
+        line-height: 50px;
+        left: 30%;
+    }
+    #points {
+        width: 50px;
+        height: 50px;
+        bottom: 10%;
+        box-shadow: inset 0 0 12px #00FF66;
+        text-align: center;
+        line-height: 50px;
+        text-shadow: 0 0 4px #FFFF00;
+        font-size: 8px;
+        right: 30%;
+    }
+    #play {
+        bottom: 25%;
+        width: 80px;
+        height: 20px;
+        font-size: 10px;
+        letter-spacing: 8px;
+        text-indent: 10px;
     }
     #reload {
         width: 200px;

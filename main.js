@@ -604,7 +604,7 @@ playBtn.addEventListener("click", (e) => {
         cancelAnimationFrame(raf);
         backgroundMusic.pause();
         playBtn.innerHTML = "Play";
-        if (canvas.width > 1366) {
+        if (this.screenX >= 1366) {
             document.getElementById("info1").style.display = "block";
         } else {
             document.getElementById("info2").style.display = "block";
